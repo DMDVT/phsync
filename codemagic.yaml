@@ -1,6 +1,7 @@
 workflows:
   android-debug:
-    name: PhSyncAPK
+    name: Android Debug APK
+    working_directory: mobile
     max_build_duration: 60
 
     environment:
@@ -9,23 +10,19 @@ workflows:
     scripts:
       - name: Generate Android project
         script: |
-          cd mobile
           flutter create . --platforms=android
 
-      - name: Install dependencies
+      - name: Install Flutter dependencies
         script: |
-          cd mobile
           flutter pub get
 
-      - name: Generate Drift files
+      - name: Generate Drift code
         script: |
-          cd mobile
           dart run build_runner build --delete-conflicting-outputs
 
       - name: Build debug APK
         script: |
-          cd mobile
           flutter build apk --debug
 
     artifacts:
-      - mobile/build/app/outputs/flutter-apk/*.apk
+      - build/app/outputs/flutter-apk/*.apk
