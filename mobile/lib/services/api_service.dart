@@ -3,7 +3,7 @@ import 'package:dio/dio.dart';
 import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 
 class ApiService {
-  ApiService({String baseUrl='http://10.0.2.2:8000'}):dio=Dio(BaseOptions(baseUrl: baseUrl));
+  ApiService({String baseUrl='https://phsync-production.up.railway.app'}):dio=Dio(BaseOptions(baseUrl: baseUrl));
   final Dio dio; final _storage=const FlutterSecureStorage();
   Future<Options> _auth() async => Options(headers:{'Authorization':'Bearer ${await _storage.read(key:'access_token') ?? ''}'});
   Future<List<dynamic>> friends() async => (await dio.get('/friends',options:await _auth())).data as List;
